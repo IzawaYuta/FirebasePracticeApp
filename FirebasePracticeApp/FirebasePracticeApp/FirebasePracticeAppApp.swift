@@ -9,6 +9,10 @@ import SwiftUI
 import FirebaseCore
 
 
+import SwiftUI
+import FirebaseCore
+
+
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -18,16 +22,19 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
 }
 
+
 @main
-struct YourApp: App {
-    // register app delegate for Firebase setup
+struct SwiftUiFirebaseApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
+    @StateObject var viewModel = AuthViewModel()
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                ContentView()
+            // ログイン状態によって画面遷移するページを変更する
+            if viewModel.isAuthenticated {
+                HelloPage(viewModel: viewModel)
+            } else {
+                SignInView(viewModel: viewModel)
             }
         }
     }
