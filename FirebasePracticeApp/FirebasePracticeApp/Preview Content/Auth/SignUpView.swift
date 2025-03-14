@@ -14,15 +14,15 @@ struct SignUpView: View {
     
     var body: some View {
         VStack {
-            TextField("Email", text: $email)
+            TextField("メールアドレス", text: $email)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             
-            SecureField("Password", text: $password)
+            SecureField("パスワード", text: $password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             
-            Button("Sign Up") {
+            Button("新規登録") {
                 viewModel.signUp(email: email, password: password)
             }
             

@@ -13,10 +13,10 @@ struct HelloPage: View {
     
     var body: some View {
         VStack {
-            Text("Hello, you're logged in!")
+            Text("ログイン完了！！！")
                 .font(.title)
                 .padding()
-            Button("Log Out") {
+            Button("ログアウト") {
                 // ログアウトしてログイン画面へ遷移する
                 viewModel.signOut()
             }

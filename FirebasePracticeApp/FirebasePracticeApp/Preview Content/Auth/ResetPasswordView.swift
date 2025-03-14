@@ -9,17 +9,27 @@ import SwiftUI
 
 struct ResetPasswordView: View {
     @State private var email: String = ""
+    @State private var isShowMessage = false
     @ObservedObject var viewModel: AuthViewModel
     
     var body: some View {
         VStack {
-            TextField("Email", text: $email)
+            if isShowMessage {
+                Text("送信完了！受信ボックスを確認してね。")
+            }
+            TextField("メールアドレス", text: $email)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             
-            Button("Reset Password") {
+            Button("送信") {
+                isShowMessage = true
                 viewModel.resetPassword(email: email)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    isShowMessage = false
+                }
             }
+            
         }
     }
 }
