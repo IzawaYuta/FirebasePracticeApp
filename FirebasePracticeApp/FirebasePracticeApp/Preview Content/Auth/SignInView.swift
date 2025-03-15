@@ -31,7 +31,12 @@ struct SignInView: View {
                     // ログイン後のページに遷移
                     HelloPage(viewModel: viewModel)
                 }
-                
+                // エラーメッセージの表示
+                if let error = viewModel.authError {
+                    Text(error)
+                        .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                }
                 // 新規登録画面への遷移ボタン
                 NavigationLink(destination: SignUpView(viewModel: viewModel)) {
                     Text("アカウント作成")

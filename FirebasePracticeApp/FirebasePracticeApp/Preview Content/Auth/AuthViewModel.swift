@@ -10,6 +10,7 @@ import FirebaseAuth
 
 class AuthViewModel: ObservableObject {
     @Published var isAuthenticated = false
+    @Published var authError: String?
     // イニシャライザメソッドを呼び出して、アプリの起動時に認証状態をチェックする
     init() {
         observeAuthChanges()
@@ -26,11 +27,21 @@ class AuthViewModel: ObservableObject {
     func signIn(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
             DispatchQueue.main.async {
+                if let error = error {
+                    self?.authError = self?.mapAuthError(error) // エラーメッセージを設定
+                    return
+                }
                 if result != nil, error == nil {
                     self?.isAuthenticated = true
+                    self?.authError = nil
                 }
             }
         }
+    }
+    // ログインできなかったときにユーザに知らせる
+    private func mapAuthError(_ error: Error) -> String {
+        let nsError = error as NSError
+            return "ログインに失敗しました。再度お試しください。\n 登録をしていない方は新規登録をしてください"
     }
     // 新規登録するメソッド
     func signUp(email: String, password: String) {
